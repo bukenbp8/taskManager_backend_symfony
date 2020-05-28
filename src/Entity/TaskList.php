@@ -37,7 +37,7 @@ class TaskList
     private $backgroundPath;
 
     /**
-     *  @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="list", cascade={"REMOVE"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="list", cascade={"REMOVE"})
      */
     private $tasks;
 
@@ -127,6 +127,7 @@ class TaskList
 
         return $this;
     }
+
     public function getUser(): ?User
     {
         return $this->user;

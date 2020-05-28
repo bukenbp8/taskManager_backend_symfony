@@ -24,6 +24,11 @@ security:
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+    logout:
+      pattern: ^/api/logout
+      stateless: true
+      anonymous: true
+
     refresh:
       pattern: ^/api/token/refresh
       stateless: true
@@ -37,9 +42,10 @@ security:
     api:
       pattern: ^/api
       stateless: true
-      guard:
-        authenticators:
-          - lexik_jwt_authentication.jwt_token_authenticator
+      anonymous: true
+      # guard:
+      #   authenticators:
+      #     - lexik_jwt_authentication.jwt_token_authenticator
 
     main:
       anonymous: true
@@ -51,7 +57,8 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/api/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }

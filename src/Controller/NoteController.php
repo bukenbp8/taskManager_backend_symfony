@@ -5,12 +5,21 @@ namespace App\Controller;
 use App\Entity\Note;
 use App\Repository\NoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class NoteController extends AbstractController
+class NoteController extends AbstractFOSRestController
 {
+    /**
+     * @var NoteRepository
+     */
+    private $noteRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
     public function __construct(NoteRepository $noteRepository, EntityManagerInterface $entityManager)
     {
         $this->noteRepository = $noteRepository;
@@ -24,7 +33,7 @@ class NoteController extends AbstractController
 
     public function deleteNoteAction(Note $note)
     {
-        if($note) {
+        if ($note) {
             $this->entityManager->remove($note);
             $this->entityManager->flush();
 

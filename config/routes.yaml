@@ -5,6 +5,11 @@
 api_login_check:
   path: /api/login_check
 
+logout:
+  type: rest
+  resource: App\Controller\LogoutController
+  prefix: api
+
 gesdinet_jwt_refresh_token:
   path: /api/token/refresh
   controller: gesdinet_jwtrefreshtoken::refresh

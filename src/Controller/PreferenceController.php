@@ -23,20 +23,20 @@ class PreferenceController extends AbstractFOSRestController
         $this->entityManager = $entityManager;
     }
 
-    public function getPreferencesAction(TaskList $list)
+    public function getPreferencesAction(TaskList $taskList)
     {
-        return $this->view($list->getPreferences(), Response::HTTP_OK);
+        return $this->view($taskList->getPreferences(), Response::HTTP_OK);
     }
 
     /**
-     * @Rest\RequestParam(name="sortValue", description="The value will be used to sort the list", nullable=false)
+     * @Rest\RequestParam(name="sortBy", description="The value will be used to sort the list", nullable=false)
      * @param ParamFetcher $paramFetcher
      * @param TaskList $list
      * @return \FOS\RestBundle\View\View
      */
     public function sortPreferencesAction(ParamFetcher $paramFetcher, TaskList $list)
     {
-        $sortValue = $paramFetcher->get('sortValue');
+        $sortValue = $paramFetcher->get('sortBy');
         if ($sortValue) {
             $list->getPreferences()->setSortValue($sortValue);
             $this->entityManager->persist($list);
@@ -45,20 +45,20 @@ class PreferenceController extends AbstractFOSRestController
         }
 
         $data['code'] = Response::HTTP_CONFLICT;
-        $data['message'] = 'The sortValue cannot be null';
+        $data['message'] = 'The sortBy cannot be null';
 
         return $this->view($data, Response::HTTP_CONFLICT);
     }
 
     /**
-     * @Rest\RequestParam(name="filterValue", description="The filter value", nullable=false)
+     * @Rest\RequestParam(name="filterBy", description="The filter value", nullable=false)
      * @param ParamFetcher $paramFetcher
      * @param TaskList $list
      * @return \FOS\RestBundle\View\View
      */
     public function filterPreferencesAction(ParamFetcher $paramFetcher, TaskList $list)
     {
-        $filterValue = $paramFetcher->get('filterValue');
+        $filterValue = $paramFetcher->get('filterBy');
         if ($filterValue) {
             $list->getPreferences()->setFilterValue($filterValue);
             $this->entityManager->persist($list);
@@ -67,7 +67,7 @@ class PreferenceController extends AbstractFOSRestController
         }
 
         $data['code'] = Response::HTTP_CONFLICT;
-        $data['message'] = 'The filterValue cannot be null';
+        $data['message'] = 'The filterBy cannot be null';
 
         return $this->view($data, Response::HTTP_CONFLICT);
     }
